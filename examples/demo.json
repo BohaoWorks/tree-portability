@@ -1,0 +1,508 @@
+{
+  "destination_prefix": "D:/Team/Backup",
+  "entries": [
+    {
+      "inferred": false,
+      "issues": [
+        "encoding_alias_risk",
+        "illegal_character"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 7,
+        "name_utf8_bytes": 7,
+        "path_utf16_units": 22,
+        "path_utf8_bytes": 22
+      },
+      "proposed": "A_B~1d831b84.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 16,
+        "name_utf8_bytes": 16,
+        "path_utf16_units": 31,
+        "path_utf8_bytes": 31
+      },
+      "source": "A:B.txt"
+    },
+    {
+      "inferred": false,
+      "issues": [],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 7,
+        "name_utf8_bytes": 7,
+        "path_utf16_units": 22,
+        "path_utf8_bytes": 22
+      },
+      "proposed": "A_B.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 7,
+        "name_utf8_bytes": 7,
+        "path_utf16_units": 22,
+        "path_utf8_bytes": 22
+      },
+      "source": "A_B.txt"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "encoding_alias_risk"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 7,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 22,
+        "path_utf8_bytes": 24
+      },
+      "proposed": "A\uff1aB.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 7,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 22,
+        "path_utf8_bytes": 24
+      },
+      "source": "A\uff1aB.txt"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "reserved_name"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 7,
+        "name_utf8_bytes": 7,
+        "path_utf16_units": 22,
+        "path_utf8_bytes": 22
+      },
+      "proposed": "_CON~09c8cc7e.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 17,
+        "name_utf8_bytes": 17,
+        "path_utf16_units": 32,
+        "path_utf8_bytes": 32
+      },
+      "source": "CON.txt"
+    },
+    {
+      "inferred": true,
+      "issues": [
+        "case_collision",
+        "target_alias_collision"
+      ],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 3,
+        "name_utf8_bytes": 3,
+        "path_utf16_units": 18,
+        "path_utf8_bytes": 18
+      },
+      "proposed": "Foo",
+      "proposed_lengths": {
+        "name_utf16_units": 3,
+        "name_utf8_bytes": 3,
+        "path_utf16_units": 18,
+        "path_utf8_bytes": 18
+      },
+      "source": "Foo"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "case_collision",
+        "target_alias_collision"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 28
+      },
+      "proposed": "Foo/readme.md",
+      "proposed_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 28
+      },
+      "source": "Foo/readme.md"
+    },
+    {
+      "inferred": true,
+      "issues": [],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 27,
+        "name_utf8_bytes": 27,
+        "path_utf16_units": 42,
+        "path_utf8_bytes": 42
+      },
+      "proposed": "Research_Project_2026_Final",
+      "proposed_lengths": {
+        "name_utf16_units": 27,
+        "name_utf8_bytes": 27,
+        "path_utf16_units": 42,
+        "path_utf8_bytes": 42
+      },
+      "source": "Research_Project_2026_Final"
+    },
+    {
+      "inferred": true,
+      "issues": [
+        "path_utf16_limit",
+        "path_utf8_limit"
+      ],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 30,
+        "name_utf8_bytes": 30,
+        "path_utf16_units": 73,
+        "path_utf8_bytes": 73
+      },
+      "proposed": "Research_Project_2026_Final/Departme~4a961a4b",
+      "proposed_lengths": {
+        "name_utf16_units": 17,
+        "name_utf8_bytes": 17,
+        "path_utf16_units": 60,
+        "path_utf8_bytes": 60
+      },
+      "source": "Research_Project_2026_Final/Department_of_Computer_Science"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "path_utf16_limit",
+        "path_utf8_limit"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 25,
+        "name_utf8_bytes": 31,
+        "path_utf16_units": 99,
+        "path_utf8_bytes": 105
+      },
+      "proposed": "Research_Project_2026_Final/Departme~4a961a4b/~721757e6",
+      "proposed_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 70,
+        "path_utf8_bytes": 70
+      },
+      "source": "Research_Project_2026_Final/Department_of_Computer_Science/\u62a5\u544a\ud83d\ude00_Final_Submission.pdf"
+    },
+    {
+      "inferred": true,
+      "issues": [
+        "nfc_collision",
+        "non_nfc",
+        "target_alias_collision"
+      ],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 5,
+        "name_utf8_bytes": 6,
+        "path_utf16_units": 20,
+        "path_utf8_bytes": 21
+      },
+      "proposed": "caf\u00e9~81ef060b",
+      "proposed_lengths": {
+        "name_utf16_units": 13,
+        "name_utf8_bytes": 14,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 29
+      },
+      "source": "cafe\u0301"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "nfc_collision",
+        "target_alias_collision"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 30,
+        "path_utf8_bytes": 31
+      },
+      "proposed": "caf\u00e9~81ef060b/notes.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 38,
+        "path_utf8_bytes": 39
+      },
+      "source": "cafe\u0301/notes.txt"
+    },
+    {
+      "inferred": true,
+      "issues": [
+        "nfc_collision",
+        "target_alias_collision"
+      ],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 4,
+        "name_utf8_bytes": 5,
+        "path_utf16_units": 19,
+        "path_utf8_bytes": 20
+      },
+      "proposed": "caf\u00e9",
+      "proposed_lengths": {
+        "name_utf16_units": 4,
+        "name_utf8_bytes": 5,
+        "path_utf16_units": 19,
+        "path_utf8_bytes": 20
+      },
+      "source": "caf\u00e9"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "nfc_collision",
+        "target_alias_collision"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 29,
+        "path_utf8_bytes": 30
+      },
+      "proposed": "caf\u00e9/notes.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 29,
+        "path_utf8_bytes": 30
+      },
+      "source": "caf\u00e9/notes.txt"
+    },
+    {
+      "inferred": true,
+      "issues": [
+        "case_collision",
+        "target_alias_collision"
+      ],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 3,
+        "name_utf8_bytes": 3,
+        "path_utf16_units": 18,
+        "path_utf8_bytes": 18
+      },
+      "proposed": "foo~2c26b46b",
+      "proposed_lengths": {
+        "name_utf16_units": 12,
+        "name_utf8_bytes": 12,
+        "path_utf16_units": 27,
+        "path_utf8_bytes": 27
+      },
+      "source": "foo"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "case_collision",
+        "target_alias_collision"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 28
+      },
+      "proposed": "foo~2c26b46b/README.md",
+      "proposed_lengths": {
+        "name_utf16_units": 9,
+        "name_utf8_bytes": 9,
+        "path_utf16_units": 37,
+        "path_utf8_bytes": 37
+      },
+      "source": "foo/README.md"
+    },
+    {
+      "inferred": false,
+      "issues": [
+        "trailing_dot_or_space"
+      ],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 13,
+        "name_utf8_bytes": 13,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 28
+      },
+      "proposed": "trailing~6fcd2434.txt",
+      "proposed_lengths": {
+        "name_utf16_units": 21,
+        "name_utf8_bytes": 21,
+        "path_utf16_units": 36,
+        "path_utf8_bytes": 36
+      },
+      "source": "trailing.txt."
+    },
+    {
+      "inferred": true,
+      "issues": [],
+      "kind": "directory",
+      "original_lengths": {
+        "name_utf16_units": 4,
+        "name_utf8_bytes": 10,
+        "path_utf16_units": 19,
+        "path_utf8_bytes": 25
+      },
+      "proposed": "\u62a5\u544a\ud83d\ude00",
+      "proposed_lengths": {
+        "name_utf16_units": 4,
+        "name_utf8_bytes": 10,
+        "path_utf16_units": 19,
+        "path_utf8_bytes": 25
+      },
+      "source": "\u62a5\u544a\ud83d\ude00"
+    },
+    {
+      "inferred": false,
+      "issues": [],
+      "kind": "file",
+      "original_lengths": {
+        "name_utf16_units": 8,
+        "name_utf8_bytes": 16,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 42
+      },
+      "proposed": "\u62a5\u544a\ud83d\ude00/\u65c5\u884c\u7167\u7247.jpg",
+      "proposed_lengths": {
+        "name_utf16_units": 8,
+        "name_utf8_bytes": 16,
+        "path_utf16_units": 28,
+        "path_utf8_bytes": 42
+      },
+      "source": "\u62a5\u544a\ud83d\ude00/\u65c5\u884c\u7167\u7247.jpg"
+    }
+  ],
+  "errors": [],
+  "inventory_complete": true,
+  "limits": {
+    "component_utf16_units": 255,
+    "component_utf8_bytes": 255,
+    "generated_name_minimum": 9,
+    "max_entries": 100000,
+    "path_budget": 70,
+    "path_budget_units": [
+      "utf8_bytes",
+      "utf16_units"
+    ]
+  },
+  "mapping": [
+    {
+      "kind": "file",
+      "proposed": "A_B~1d831b84.txt",
+      "reasons": [
+        "encoding_alias_risk",
+        "illegal_character"
+      ],
+      "source": "A:B.txt"
+    },
+    {
+      "kind": "file",
+      "proposed": "_CON~09c8cc7e.txt",
+      "reasons": [
+        "reserved_name"
+      ],
+      "source": "CON.txt"
+    },
+    {
+      "kind": "directory",
+      "proposed": "Research_Project_2026_Final/Departme~4a961a4b",
+      "reasons": [
+        "budget_shortened",
+        "path_utf16_limit",
+        "path_utf8_limit"
+      ],
+      "source": "Research_Project_2026_Final/Department_of_Computer_Science"
+    },
+    {
+      "kind": "file",
+      "proposed": "Research_Project_2026_Final/Departme~4a961a4b/~721757e6",
+      "reasons": [
+        "budget_shortened",
+        "parent_renamed",
+        "path_utf16_limit",
+        "path_utf8_limit"
+      ],
+      "source": "Research_Project_2026_Final/Department_of_Computer_Science/\u62a5\u544a\ud83d\ude00_Final_Submission.pdf"
+    },
+    {
+      "kind": "directory",
+      "proposed": "caf\u00e9~81ef060b",
+      "reasons": [
+        "nfc_collision",
+        "non_nfc",
+        "target_alias_collision"
+      ],
+      "source": "cafe\u0301"
+    },
+    {
+      "kind": "file",
+      "proposed": "caf\u00e9~81ef060b/notes.txt",
+      "reasons": [
+        "nfc_collision",
+        "parent_renamed",
+        "target_alias_collision"
+      ],
+      "source": "cafe\u0301/notes.txt"
+    },
+    {
+      "kind": "directory",
+      "proposed": "foo~2c26b46b",
+      "reasons": [
+        "alias_renamed",
+        "case_collision",
+        "target_alias_collision"
+      ],
+      "source": "foo"
+    },
+    {
+      "kind": "file",
+      "proposed": "foo~2c26b46b/README.md",
+      "reasons": [
+        "case_collision",
+        "parent_renamed",
+        "target_alias_collision"
+      ],
+      "source": "foo/README.md"
+    },
+    {
+      "kind": "file",
+      "proposed": "trailing~6fcd2434.txt",
+      "reasons": [
+        "trailing_dot_or_space"
+      ],
+      "source": "trailing.txt."
+    }
+  ],
+  "mode": "plan-only",
+  "plan_complete": true,
+  "profile": "portable",
+  "schema_version": 1,
+  "source_kind": "path-list",
+  "summary": {
+    "blocked_entries": 0,
+    "entries": 18,
+    "entries_with_issues": 14,
+    "inventory_errors": 0,
+    "mapping_entries": 9,
+    "omitted_error_details": 0,
+    "records_read": 11
+  },
+  "tool_version": "0.1.0",
+  "verification": {
+    "target_aliases_unique": true,
+    "target_lengths_fit": true,
+    "validated_entries": 18
+  }
+}

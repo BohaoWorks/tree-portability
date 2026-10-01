@@ -1,0 +1,66 @@
+TREE PORTABILITY  /  PLAN ONLY
+==================================================================
+Target   : portable  |  path budget 70 UTF-8 bytes + UTF-16 units
+Prefix   : D:/Team/Backup
+Inventory: 18 entries  |  14 with issues
+Mapping  : 9 changes  |  0 blocked
+Status   : COMPLETE
+------------------------------------------------------------------
+  A:B.txt
+    -> A_B~1d831b84.txt
+       encoding_alias_risk, illegal_character
+       full path: 22 B / 22 u16 -> 31 B / 31 u16
+  A：B.txt
+    -> A：B.txt
+       encoding_alias_risk
+       full path: 24 B / 22 u16 -> 24 B / 22 u16
+  CON.txt
+    -> _CON~09c8cc7e.txt
+       reserved_name
+       full path: 22 B / 22 u16 -> 32 B / 32 u16
+  Foo
+    -> Foo
+       case_collision, target_alias_collision
+       full path: 18 B / 18 u16 -> 18 B / 18 u16
+  Foo/readme.md
+    -> Foo/readme.md
+       case_collision, target_alias_collision
+       full path: 28 B / 28 u16 -> 28 B / 28 u16
+  Research_Project_2026_Final/Department_of_Computer_Science
+    -> Research_Project_2026_Final/Departme~4a961a4b
+       path_utf16_limit, path_utf8_limit
+       full path: 73 B / 73 u16 -> 60 B / 60 u16
+  Research_Project_2026_Final/Department_of_Computer_Science/报告😀_Final_Submission.pdf
+    -> Research_Project_2026_Final/Departme~4a961a4b/~721757e6
+       path_utf16_limit, path_utf8_limit
+       full path: 105 B / 99 u16 -> 70 B / 70 u16
+  café
+    -> café~81ef060b
+       nfc_collision, non_nfc, target_alias_collision
+       full path: 21 B / 20 u16 -> 29 B / 28 u16
+  café/notes.txt
+    -> café~81ef060b/notes.txt
+       nfc_collision, target_alias_collision
+       full path: 31 B / 30 u16 -> 39 B / 38 u16
+  café
+    -> café
+       nfc_collision, target_alias_collision
+       full path: 20 B / 19 u16 -> 20 B / 19 u16
+  café/notes.txt
+    -> café/notes.txt
+       nfc_collision, target_alias_collision
+       full path: 30 B / 29 u16 -> 30 B / 29 u16
+  foo
+    -> foo~2c26b46b
+       case_collision, target_alias_collision
+       full path: 18 B / 18 u16 -> 27 B / 27 u16
+  foo/README.md
+    -> foo~2c26b46b/README.md
+       case_collision, target_alias_collision
+       full path: 28 B / 28 u16 -> 37 B / 37 u16
+  trailing.txt.
+    -> trailing~6fcd2434.txt
+       trailing_dot_or_space
+       full path: 28 B / 28 u16 -> 36 B / 36 u16
+==================================================================
+No source entries renamed or copied. Review the mapping before use.

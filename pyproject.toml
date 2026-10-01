@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tree-portability"
+version = "0.1.0"
+description = "Offline directory-tree portability checks and deterministic collision-free rename plans."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "zhengbohao74-lgtm"}]
+keywords = ["filenames", "portability", "windows", "exfat", "backup", "unicode"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: System :: Filesystems",
+]
+dependencies = []
+
+[project.scripts]
+tree-portability = "tree_portability.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/zhengbohao74-lgtm/tree-portability"
+Issues = "https://github.com/zhengbohao74-lgtm/tree-portability/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

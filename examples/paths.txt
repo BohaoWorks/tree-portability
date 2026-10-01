@@ -1,0 +1,11 @@
+CON.txt
+A:B.txt
+A：B.txt
+A_B.txt
+Foo/readme.md
+foo/README.md
+café/notes.txt
+café/notes.txt
+报告😀/旅行照片.jpg
+trailing.txt.
+Research_Project_2026_Final/Department_of_Computer_Science/报告😀_Final_Submission.pdf
