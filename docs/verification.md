@@ -32,11 +32,14 @@ was corrected to a 50-unit budget. At 70, preserving that root was valid and a
 lower parent was shortened correctly. This was a fixture expectation correction,
 not evidence of a broken allocator.
 
-## Configured but not yet executed here
+## Hosted verification
 
-`.github/workflows/ci.yml` covers Linux and Windows on Python 3.10, 3.12, and 3.14.
-No hosted CI run or real Windows/exFAT destination transfer was verified by this
-local record. Windows may skip real symlink creation if account permissions deny
+On 2026-10-02, the [2026-10-01 Actions run](https://github.com/BohaoWorks/tree-portability/actions/runs/36834990251)
+was verified successful for commit `2846ff779253a5ad7875d9e3666eb4df6b75d82d`.
+All six Linux/Windows and Python 3.10/3.12/3.14 jobs passed. This result applies
+only to that commit; later commits need their own checks.
+
+No real Windows/exFAT destination transfer was verified. Windows may skip real symlink creation if account permissions deny
 it; reparse-point metadata recognition is also tested with synthetic metadata.
 The FIFO and newline-filename tests intentionally skip on Windows.
 
