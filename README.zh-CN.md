@@ -103,7 +103,7 @@ python examples/make_demo.py --check
 ```
 
 CI 配置覆盖 Linux/Windows 和 Python 3.10/3.12/3.14，并验证 wheel 安装与示例一致性。
-[验证记录](docs/verification.md) 区分已执行的本地检查与尚未执行的远端 CI。
+[验证记录](docs/verification.md) 分别列出本地检查与初始发布提交已通过的全部 6 个远端 CI 检查，并保留实际文件系统迁移尚未验证的限制。
 
 ## 背景
 
