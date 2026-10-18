@@ -91,8 +91,45 @@ A path list is UTF-8, one **relative slash-separated** path per line. A final `/
 declares a directory. Parents are inferred; blank lines are ignored but count
 toward the input cap. Backslashes inside a component are literal characters,
 not separators. Absolute paths, `.`/`..`, empty components, NUL, and inconsistent
-file/parent declarations are rejected. Use a directory scan for names containing
-newlines; the line-based manifest cannot represent those names exactly.
+file/parent declarations are rejected. Use `--null` or a directory scan for names
+containing newlines; the default line-based manifest cannot represent them exactly.
+
+### Exact paths from Git and NUL-delimited tools
+
+`--path-list FILE --null` reads **NUL-terminated UTF-8 records**, preserving literal
+CR and LF in filenames. For example, from the repository root in a POSIX shell
+(macOS, Linux, or Git Bash):
+
+```sh
+git ls-files -z > paths.bin &&
+tree-portability --path-list paths.bin --null --json
+```
+
+Use binary-preserving redirection. In Windows PowerShell, Python can write the
+producer's bytes without text conversion:
+
+```powershell
+python -c "import subprocess; from pathlib import Path; Path('paths.bin').write_bytes(subprocess.check_output(['git', 'ls-files', '-z']))"
+if ($LASTEXITCODE -eq 0) {
+    tree-portability --path-list paths.bin --null --json
+}
+```
+
+Git lists tracked index paths, not untracked files or empty directories. A manifest
+does not inspect on-disk types: use `--root` for a filesystem inventory that detects
+links and special files. A selected relative directory can also produce a file-only
+list with `find photos -type f -print0 > paths.bin` in a compatible POSIX shell.
+
+The same relative-path contract applies: no absolute paths or `./` prefixes, and
+directories must end in `/`. Empty records are ignored but count toward the cap.
+An empty file is valid. Every nonempty record must end in NUL; an unterminated final
+record is rejected as potentially truncated, with an incomplete report and exit 2.
+Check the producer's exit status too: truncation at a record boundary or a failed
+producer's empty file cannot be detected from delimiters alone.
+Input limits, deterministic JSON, and plan-only behavior are unchanged. `--null`
+cannot be combined with `--root`.
+
+### Profiles
 
 | Profile | Component limits | Default whole-path budget |
 | --- | --- | --- |

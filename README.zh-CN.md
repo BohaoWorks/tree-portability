@@ -69,7 +69,39 @@ PowerShell 可先安装，或先执行 `$env:PYTHONPATH = 'src'`。运行本身�
 清单必须是 UTF-8，每行一条相对路径，使用 `/` 分隔，末尾 `/` 表示目录。
 父目录自动补全，空行忽略但仍计入读取上限。组件内的反斜杠是文件名字符，不是分隔符。
 绝对路径、`.`/`..`、空组件、NUL 和源文件/父目录类型矛盾都会报错。
-换行符名称无法由逐行清单精确表示，请用目录扫描。
+换行符名称无法由默认的逐行清单精确表示，请用 `--null` 或目录扫描。
+
+### 精确读取 Git 等工具的 NUL 清单
+
+`--path-list FILE --null` 按 **NUL 结尾的 UTF-8 记录**读取路径，保留文件名中的
+回车和换行，包括末尾的回车、换行。在仓库根目录的 POSIX shell
+（macOS、Linux 或 Git Bash）中，例如：
+
+```sh
+git ls-files -z > paths.bin &&
+tree-portability --path-list paths.bin --null --json
+```
+
+重定向必须保留原始字节。Windows PowerShell 用户可用 Python 写文件，避免文本转换：
+
+```powershell
+python -c "import subprocess; from pathlib import Path; Path('paths.bin').write_bytes(subprocess.check_output(['git', 'ls-files', '-z']))"
+if ($LASTEXITCODE -eq 0) {
+    tree-portability --path-list paths.bin --null --json
+}
+```
+
+Git 列出索引中已跟踪的路径，不包括未跟踪文件或空目录。路径清单不会检查磁盘上的
+实际类型；需要识别链接及特殊文件时，请用 `--root`。在支持的 POSIX shell 中，也可用
+`find photos -type f -print0 > paths.bin` 为指定的相对目录生成仅含文件的清单。
+
+相对路径规则不变：不接受绝对路径或 `./` 前缀，目录仍须以 `/` 结尾。
+空记录忽略但计入上限，空文件可表示空清单。每条非空记录必须以 NUL 结尾；
+末尾缺 NUL 会视为可能截断，生成不完整报告并返回退出码 2。
+仍需检查生成清单的命令是否成功；恰好在记录边界截断或失败后留下空文件无法仅靠
+分隔符检测。读取上限、确定性 JSON 和只生成计划的行为不变，`--null` 不能与 `--root` 同用。
+
+### 目标规则
 
 | 规则 | 单个名称上限 | 默认完整路径预算 |
 | --- | --- | --- |
