@@ -4,6 +4,29 @@ Local verification: **2026-10-01, cloud Linux, CPython 3.12**.
 Synthetic inputs only; no user-computer operations, real directory inventories,
 network services, registry publication, or source-file renames/copies were used.
 
+## NUL manifest update, 2026-10-18
+
+Verified locally on cloud Linux with CPython 3.12.14:
+
+- **74 unittest cases passed**, including 17 new NUL-manifest regression cases
+- Literal and trailing CR/LF, Unicode, explicit directories, empty records,
+  truncated final records, invalid UTF-8, record/node/path caps, chunk boundaries,
+  an infinite synthetic input stream, and rejection of `--root --null`
+- A real temporary Git index produced `git ls-files -z` input; exact names were
+  retained, including newline-containing names on this Linux run
+- Equivalent line/NUL inventories produced byte-identical JSON; the committed
+  demo remained byte-for-byte unchanged
+- Wheel built without runtime dependencies, installed in a clean virtual
+  environment, and the 74-case suite and demo passed again
+- The installed console script was run outside the checkout against synthetic
+  CR/LF names and an unterminated record; expected exit codes 1 and 2 were verified
+- Independent code review found no blocking issues; 2,000 additional deterministic
+  randomized differential cases passed before the final regression-suite run
+
+These are local results. The existing Linux/Windows and Python 3.10/3.12/3.14
+workflow must be checked for the exact published commit; earlier CI is not evidence
+for this update. No actual destination transfer or source rename was performed.
+
 ## Executed
 
 - **57 unittest cases passed**, with no skips on Linux. Core planners, real scanner
