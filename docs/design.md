@@ -47,6 +47,29 @@ walker. Freeze the source tree during inspection. A symlink or special file is
 reported but not planned. Output exclusivity is for accidental overwrite
 protection, not a defense against hostile concurrent replacement of output parents.
 
+## Manifest records
+
+The default UTF-8 manifest keeps its line-based behavior, including CRLF support
+and an optional final line ending. With `--path-list FILE --null`, only NUL separates
+records; CR and LF are literal filename characters, including at the end of a name.
+Both formats use the same relative-path validation, directory `/` marker, inferred
+parents, record/node caps, and planner. No filename quoting or escape decoding occurs.
+
+NUL input is read in bounded chunks. A record over the input path limit is never
+split into invented paths. A final nonempty record without NUL produces
+`manifest_missing_terminator` and is omitted from the partial inventory; earlier
+terminated records may remain, but `inventory_complete` and `plan_complete` are
+false. This catches an incomplete final record, not truncation exactly at a record
+boundary or a failed producer that wrote an empty file. Check the producer's exit
+status too. Empty records are ignored but count toward the input cap; an empty
+file is a valid empty inventory. These options do not add a JSON schema field or
+change the report for equivalent complete inventories.
+
+A manifest describes names and declared types, not on-disk metadata. Git index
+lists can omit untracked files and empty directories and can include paths for
+symlinks or submodules without type markers. Use a directory scan when those
+filesystem distinctions matter; NUL delimiters alone cannot establish completeness.
+
 ## JSON schema version 1
 
 - `mode`: always `plan-only`; `schema_version` and `tool_version` identify format

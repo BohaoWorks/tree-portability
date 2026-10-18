@@ -113,15 +113,20 @@ class Inventory:
         return True
 
 
-def inventory_from_paths(lines: Iterable[str], max_entries: int = MAX_ENTRIES) -> Inventory:
-    """Read relative POSIX paths; one trailing '/' declares a directory."""
+def inventory_from_paths(
+    lines: Iterable[str], max_entries: int = MAX_ENTRIES, *, strip_line_endings: bool = True,
+) -> Inventory:
+    """Read relative paths; one trailing '/' declares a directory.
+
+    Already-delimited records can preserve literal CR/LF with strip_line_endings=False.
+    """
     inventory = Inventory(max_entries=max_entries)
     for record, line in enumerate(lines, 1):
         if record > max_entries:
             inventory.error("record_limit", ".", f"Input exceeds {max_entries} records (blank lines and duplicates count)")
             break
         inventory.records = record
-        path = line.rstrip("\r\n")
+        path = line.rstrip("\r\n") if strip_line_endings else line
         if not path:
             continue
         kind = "directory" if path.endswith("/") else "file"

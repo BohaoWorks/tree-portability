@@ -75,11 +75,11 @@ def render_report(report: dict, *, preview: int = 12, color: bool = False) -> st
     return "\n".join(lines) + "\n"
 
 
-def _manifest(path: str, maximum: int) -> Inventory:
-    """Stream a manifest, bounding each line before handing it to the parser."""
-    inventory = None
+def _manifest(path: str, maximum: int, *, null_terminated: bool = False) -> Inventory:
+    """Stream bounded UTF-8 records without interpreting literal CR/LF in NUL mode."""
     with open(path, encoding="utf-8", newline="") as handle:
         oversized = False
+        unterminated = False
 
         def lines():
             nonlocal oversized
@@ -92,9 +92,34 @@ def _manifest(path: str, maximum: int) -> Inventory:
                     break
                 yield line
 
-        inventory = inventory_from_paths(lines(), maximum)
+        def null_records():
+            nonlocal oversized, unterminated
+            pending = ""
+            while True:
+                chunk = handle.read(4096)
+                if not chunk:
+                    unterminated = bool(pending)
+                    return
+                records = (pending + chunk).split("\0")
+                for record in records[:-1]:
+                    # Allow one extra character for the explicit directory '/'.
+                    if len(record) > MAX_INPUT_PATH + 1:
+                        oversized = True
+                        return
+                    yield record
+                pending = records[-1]
+                if len(pending) > MAX_INPUT_PATH + 1:
+                    oversized = True
+                    return
+
+        inventory = inventory_from_paths(
+            null_records() if null_terminated else lines(), maximum,
+            strip_line_endings=not null_terminated,
+        )
         if oversized:
             inventory.error("input_path_limit", "<oversized-record>", "Manifest record exceeds the input path limit")
+        if unterminated:
+            inventory.error("manifest_missing_terminator", "<unterminated-record>", "NUL manifest must end each record with NUL")
     return inventory
 
 
@@ -105,6 +130,7 @@ def _parser() -> argparse.ArgumentParser:
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--root", help="explicit directory to scan; observed links and reparse points are never traversed")
     source.add_argument("--path-list", help="UTF-8 manifest: relative slash-separated paths, directories end in /")
+    parser.add_argument("--null", dest="null_terminated", action="store_true", help="--path-list records end in NUL instead of newline; preserves literal CR/LF")
     parser.add_argument("--profile", choices=sorted(PROFILES), default="portable")
     parser.add_argument("--destination-prefix", default="", help="fixed target prefix as text; never accessed")
     parser.add_argument("--path-budget", type=int, help="inclusive full-path limit including prefix and separators")
@@ -123,6 +149,8 @@ def main(argv: list[str] | None = None) -> int:
             stream.reconfigure(encoding="utf-8", errors="backslashreplace")
     parser = _parser()
     args = parser.parse_args(argv)
+    if args.null_terminated and args.path_list is None:
+        parser.error("--null requires --path-list")
     try:
         if args.preview < 0 or args.preview > 1000:
             raise ValueError("preview must be between 0 and 1000")
@@ -134,7 +162,9 @@ def main(argv: list[str] | None = None) -> int:
             if output == root or root in output.parents:
                 raise ValueError("output must be outside the source root")
         try:
-            inventory = scan_directory(args.root, args.max_entries) if args.root else _manifest(args.path_list, args.max_entries)
+            inventory = scan_directory(args.root, args.max_entries) if args.root else _manifest(
+                args.path_list, args.max_entries, null_terminated=args.null_terminated,
+            )
         except (OSError, UnicodeError) as exc:
             inventory = Inventory(max_entries=args.max_entries)
             code = type(exc).__name__
