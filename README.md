@@ -148,6 +148,14 @@ casefold intentionally over-reports some aliases. Extended/device paths and
 
 - Reads directory metadata, not file contents; never follows observed symlinks,
   junctions, or reparse points. A root with a linked ancestor is refused
+- Root components are checked before `..` is collapsed: `link/../photos`,
+  `missing/../photos`, and `file/../photos` are refused with an incomplete
+  inventory (exit 2). An existing ordinary `folder/../photos` is allowed.
+  Relative and absolute roots follow the same rules; the output guard uses
+  the validated scan root. A refused root can still produce a new JSON error
+  report with `--output`, but no directory entries are scanned. Windows
+  embedded-drive components and device/extended roots containing `..` are
+  refused as unsupported (`scan_failed`, `EINVAL`)
 - Links and special files have no proposal and make the plan incomplete
 - Permission and traversal errors are visible; incomplete scans never appear clean
 - Scans are snapshots, not atomic. Don't scan a tree being modified by an untrusted
