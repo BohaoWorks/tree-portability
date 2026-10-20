@@ -67,6 +67,8 @@ class Inventory:
     records: int = 0
     error_count: int = 0
     source_kind: str = "path-list"
+    # Internal scan metadata; never included in the public report.
+    _scan_root: Path | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         if not 1 <= self.max_entries <= 1_000_000:
@@ -150,18 +152,42 @@ def scan_directory(root: str | os.PathLike[str], max_entries: int = MAX_ENTRIES)
     metadata snapshot, not an atomic walk of a concurrently modified filesystem.
     """
     inventory = Inventory(max_entries=max_entries, source_kind="scan")
-    root_path = Path(os.path.abspath(root))
     try:
-        for ancestor in (*reversed(root_path.parents), root_path):
-            if _is_link(ancestor.lstat()):
+        raw_root = Path(root)
+        tail = raw_root.parts[1:] if raw_root.anchor else raw_root.parts
+        # Joining a Windows drive component can reset the accumulated path.
+        # Extended/device namespaces also do not use ordinary '..' semantics.
+        if any(Path(part).drive for part in tail) or (
+            raw_root.drive.startswith(("\\\\?\\", "\\\\.\\")) and ".." in tail
+        ):
+            inventory.error("scan_failed", ".", "EINVAL")
+            return inventory
+        if not raw_root.is_absolute():
+            # Resolve only the anchor/current directory, never the user's tail.
+            # This also preserves Windows drive-relative and rooted paths.
+            raw_root = Path(os.path.abspath(raw_root.anchor or "."), *tail)
+        root_path = Path(raw_root.anchor)
+        for index, part in enumerate(raw_root.parts):
+            if index:
+                # The previous prefix was already checked before '..' erases it.
+                root_path = root_path.parent if part == ".." else root_path / part
+            metadata = root_path.lstat()
+            if _is_link(metadata):
                 inventory.error("root_link", ".", "The explicit root or one of its ancestors is a link/reparse point")
                 return inventory
-        if not stat.S_ISDIR(root_path.lstat().st_mode):
-            inventory.error("not_a_directory", ".", "The explicit root must be a directory")
-            return inventory
+            if not stat.S_ISDIR(metadata.st_mode):
+                if index == len(raw_root.parts) - 1:
+                    inventory.error("not_a_directory", ".", "The explicit root must be a directory")
+                else:
+                    inventory.error("scan_failed", ".", "ENOTDIR")
+                return inventory
+        # Canonicalize only after all original prefixes passed validation.
+        # The scanner and output guard must also agree on aliases such as //tmp.
+        root_path = root_path.resolve(strict=True)
     except OSError as exc:
         inventory.error("scan_failed", ".", errno.errorcode.get(exc.errno, "OS_ERROR"))
         return inventory
+    inventory._scan_root = root_path
 
     pending = [(root_path, "")]
     while pending:
