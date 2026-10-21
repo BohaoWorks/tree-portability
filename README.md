@@ -94,6 +94,12 @@ not separators. Absolute paths, `.`/`..`, empty components, NUL, and inconsisten
 file/parent declarations are rejected. Use `--null` or a directory scan for names
 containing newlines; the default line-based manifest cannot represent them exactly.
 
+Directory scans preserve literal POSIX names, including leading backslashes and
+children of a directory named `C:`. These names receive portability issues and
+rename proposals rather than being dropped as invalid paths. External path lists
+still reject Windows absolute/rooted forms such as `C:/file` and `\file`; use a
+directory scan when literal POSIX names would be ambiguous in a path list.
+
 ### Exact paths from Git and NUL-delimited tools
 
 `--path-list FILE --null` reads **NUL-terminated UTF-8 records**, preserving literal
