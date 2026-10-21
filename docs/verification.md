@@ -4,6 +4,30 @@ Local verification: **2026-10-01, cloud Linux, CPython 3.12**.
 Synthetic inputs only; no user-computer operations, real directory inventories,
 network services, registry publication, or source-file renames/copies were used.
 
+## Literal POSIX scan names update, 2026-10-21
+
+Verified on cloud Linux with CPython 3.12.14, using synthetic trees only:
+
+- The baseline is PR #2 head `f51a968a0cbdfb4e852f92b65a47c4bf0b7eb960`;
+  all 22 fetched file blobs matched GitHub and its original 89 tests passed.
+- Real files named `\report.txt`, `\\server\share`, and `C:\report.txt`,
+  and children of a directory named `C:`, reproduced `invalid_path` errors.
+  Four new tests failed before the fix, including the CLI returning exit 2.
+- Filesystem enumeration now uses a private insertion path that preserves these
+  literal names. Public `Inventory.add` and both manifest modes retain their
+  Windows absolute/rooted-path rejection, even if `source_kind` is set to `scan`.
+- **96 unittest cases passed**, with zero skips on Linux, from source and from
+  an independently installed wheel. Regressions cover complete inventories,
+  valid parent/child proposals, CLI exit 1, unchanged source bytes, observed
+  symlinks without traversal, entry limits, and strict manifest/public input.
+- The prior explicit-root tests, deterministic demo, installed console entry
+  point, compilation, and whitespace checks passed. No version or dependencies
+  changed; remote CI must still be checked for the final published commit.
+
+中文摘要：扫描时保留 POSIX 合法但不可直接移植到 Windows 的原始名称，
+给出诊断和建议，不再漏掉条目。外部清单与公开插入接口的路径检查保持不变，
+不依赖可修改的来源标签决定信任。源码和独立 wheel 均通过 96 项测试。
+
 ## Explicit-root validation update, 2026-10-20
 
 Verified locally on cloud Linux with CPython 3.12.14, using synthetic trees only:
