@@ -156,11 +156,6 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError("preview must be between 0 and 1000")
         # Validate configuration before touching the explicitly supplied source.
         build_report(Inventory(max_entries=args.max_entries), args.profile, args.destination_prefix, args.path_budget)
-        if args.output and args.root:
-            root = Path(args.root).resolve()
-            output = Path(args.output).resolve()
-            if output == root or root in output.parents:
-                raise ValueError("output must be outside the source root")
         try:
             inventory = scan_directory(args.root, args.max_entries) if args.root else _manifest(
                 args.path_list, args.max_entries, null_terminated=args.null_terminated,
@@ -169,6 +164,12 @@ def main(argv: list[str] | None = None) -> int:
             inventory = Inventory(max_entries=args.max_entries)
             code = type(exc).__name__
             inventory.error("manifest_read_failed", ".", code)
+        if args.output and inventory._scan_root is not None:
+            # Reuse the exact root validated by the scan, including parent steps.
+            root = inventory._scan_root
+            output = Path(args.output).resolve()
+            if output == root or root in output.parents:
+                raise ValueError("output must be outside the source root")
         report = build_report(inventory, args.profile, args.destination_prefix, args.path_budget)
         if args.output:
             # 'x' prevents accidental source/list/report overwrite; no parent dirs created.
