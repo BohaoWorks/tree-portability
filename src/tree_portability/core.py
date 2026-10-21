@@ -82,11 +82,18 @@ class Inventory:
             self.errors.append({"code": code, "path": path[:512], "detail": detail})
 
     def add(self, path: str, kind: str) -> bool:
+        return self._add(path, kind, from_scan=False)
+
+    def _add(self, path: str, kind: str, *, from_scan: bool) -> bool:
         parts = path.split("/")
         if (
             not path
-            or path.startswith(("/", "\\"))
-            or re.match(r"^[A-Za-z]:[/\\]", path)
+            or path.startswith("/")
+            # Filesystem enumeration already supplies relative components.
+            # On POSIX, backslashes and drive-like names are literal names.
+            or (not from_scan and (
+                path.startswith("\\") or re.match(r"^[A-Za-z]:[/\\]", path)
+            ))
             or any(part in ("", ".", "..") for part in parts)
             or "\0" in path
         ):
@@ -218,7 +225,7 @@ def scan_directory(root: str | os.PathLike[str], max_entries: int = MAX_ENTRIES)
                     except OSError as exc:
                         inventory.error("entry_stat_failed", path, errno.errorcode.get(exc.errno, "OS_ERROR"))
                         continue
-                    if not inventory.add(path, kind):
+                    if not inventory._add(path, kind, from_scan=True):
                         return inventory
                     if kind == "directory" and path in inventory.entries:
                         children.append((Path(item.path), path))
